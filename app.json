@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "EternisID",
+    "slug": "EternisID",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/dna.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/dna.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/dna.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/dna.png"
+    },
+    "scheme": "eternis"
+  }
+}
