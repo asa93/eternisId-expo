@@ -9,14 +9,14 @@ import {
   Pressable,
 } from "react-native";
 
-import { providers, styles, ReclaimProvider } from "./const";
+import { providers, styles, ReclaimProvider, ReclaimProof } from "./const";
 import { transformProof, parseProof } from "./utils";
 import { Reclaim, Proof } from "@reclaimprotocol/reactnative-sdk";
 import * as Linking from "expo-linking";
 
 import { Dropdown } from "react-native-element-dropdown";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { test_proofs } from "./test_proofs";
 
@@ -25,7 +25,7 @@ const prefix = Linking.createURL("/");
 export function ReclaimScreen({ navigation, appDeepLink }) {
   const [provider, setProvider] = useState<ReclaimProvider | null>(null);
   const [reclaimUrl, setReclaimUrl] = useState<string | null>(null);
-  const [proof, setProof] = useState<Proof | null>(null);
+  const [proof, setProof] = useState<ReclaimProof | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [txHash, setTxHash] = useState<string | null>(null);
 
@@ -67,13 +67,7 @@ export function ReclaimScreen({ navigation, appDeepLink }) {
       onSuccessCallback: (proof) => {
         console.log("Verification success", proof);
         // Your business logic here
-        setProof({
-          claimData: JSON.parse(proof.claimData as any),
-          identifier: proof.identifier,
-          signatures: JSON.parse(proof.signatures as any),
-          witnesses: JSON.parse(proof.witnesses as any),
-          extractedParameterValues: proof.extractedParameterValues,
-        });
+        setProof(parseProof(proof));
       },
       onFailureCallback: (e: any) => {
         console.error("Verification failed", e);
@@ -87,15 +81,16 @@ export function ReclaimScreen({ navigation, appDeepLink }) {
   async function createIdentity() {
     await axios
       .post(process.env.EXPO_PUBLIC_BACKEND_URL + "createIdentity", {
-        providerHash: provider?.providerHash,
         identityCommitment,
-        reclaimProof: transformProof(proof),
+        reclaimProof: proof,
       })
       .then((response) => {
-        setTxHash(response.data);
+        console.log("data", response?.data);
+        setTxHash(response?.data.toString());
       })
-      .catch((e) => {
-        setError(e.response.data);
+      .catch((e: AxiosError) => {
+        console.log("error", e.toString());
+        setError(e?.response?.data.toString().slice(0, 100));
       });
   }
 
@@ -126,7 +121,7 @@ export function ReclaimScreen({ navigation, appDeepLink }) {
           />
         )}
 
-        {proof && (
+        {!txHash && proof && (
           <View style={styles.container}>
             <Image
               source={require("./assets/approved.png")}
@@ -141,19 +136,17 @@ export function ReclaimScreen({ navigation, appDeepLink }) {
         {txHash && (
           <View style={styles.container}>
             <Image
-              source={require("./assets/approved.png")} // Make sure to place your checkmark image in the project directory
+              source={require("./assets/approved.png")}
               style={styles.checkmark}
             />
-            <Text style={styles.text}>
-              Identity created.{" "}
-              <Pressable
-                onPress={() =>
-                  Linking.openURL("https://sepolia.arbiscan.io/tx/" + txHash)
-                }
-              >
-                See transaction
-              </Pressable>
-            </Text>
+            <Text style={styles.text}>Identity created. </Text>
+            <Pressable
+              onPress={() =>
+                Linking.openURL("https://sepolia.arbiscan.io/tx/" + txHash)
+              }
+            >
+              <Text style={styles.text}> See transaction</Text>
+            </Pressable>
           </View>
         )}
         {error && <Text>Error: {error}</Text>}

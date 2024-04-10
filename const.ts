@@ -2,6 +2,8 @@ import {
     StyleSheet
 } from "react-native";
 
+import { Reclaim, WitnessData, ProviderClaimData } from "@reclaimprotocol/reactnative-sdk";
+
 export type ReclaimProvider = {
     provider: string;
     providerId: string;
@@ -90,3 +92,11 @@ export const styles = StyleSheet.create({
     },
     button: {},
 });
+
+export type ReclaimProof = {
+    claimData: ProviderClaimData,
+    identifier: string,
+    signatures: string[],
+    witnesses: WitnessData[],
+    extractedParameterValues?: any
+}
