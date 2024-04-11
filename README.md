@@ -2,6 +2,14 @@
 
 ## Install
 
+make sure that expo app is installed on your phone
+[android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=fr&gl=US) 
+[ios](https://apps.apple.com/us/app/expo-go/id982107779)
+
+```
+npm install
+```
+
 ## Run on brower
 
 ```
@@ -12,4 +20,3 @@ npm run web
 ```
 npm run start
 ```
-make sure that [expo](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=fr&gl=US) is installed  
