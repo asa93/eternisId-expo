@@ -10,15 +10,15 @@ make sure that expo app is installed on your phone
 npm install
 ```
 
-## Run on brower
+## Run app 
 
-```
-npm run web
-```
-## Run on your mobile
+In your computer
 
 ```
 npm run start
 ```
-then scan the QR code with your mobile 
-Make sure that your mobile is connected on the same wifi network as your computer
+
+
+Then on your mobilen, open expo and scan the QR code with your mobile.
+
+Note: Make sure that your mobile is connected on the same wifi network as your computer
