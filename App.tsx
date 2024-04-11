@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ReclaimScreen } from "./ReclaimScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
+import { ReclaimWebview } from "./ReclaimWebview";
 
 const prefix = Linking.createURL("/");
 
@@ -17,8 +18,9 @@ export default function App() {
 
   return (
     <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
-      <Stack.Navigator initialRouteName="Reclaim">
+      <Stack.Navigator initialRouteName="ReclaimWebview">
         <Stack.Screen name="Reclaim" component={ReclaimScreen} />
+        <Stack.Screen name="ReclaimWebview" component={ReclaimWebview} />
       </Stack.Navigator>
     </NavigationContainer>
   );

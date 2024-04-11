@@ -8,16 +8,12 @@ import {
   Image,
   Pressable,
 } from "react-native";
-
 import { providers, styles, ReclaimProvider, ReclaimProof } from "./const";
 import { transformProof, parseProof } from "./utils";
 import { Reclaim, Proof } from "@reclaimprotocol/reactnative-sdk";
 import * as Linking from "expo-linking";
-
 import { Dropdown } from "react-native-element-dropdown";
-
 import axios, { AxiosError } from "axios";
-
 import { test_proofs } from "./test_proofs";
 
 const prefix = Linking.createURL("/");
