@@ -20,3 +20,5 @@ npm run web
 ```
 npm run start
 ```
+then scan the QR code with your mobile 
+Make sure that your mobile is connected on the same wifi network as your computer
